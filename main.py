@@ -6,38 +6,61 @@
 import pyglet
 from pyglet import image
 from pyglet.window import Window
+from pyglet.sprite import Sprite
 from pyglet import app
 from pyglet.gl import *
+from pyglet.window import key
 
 
 def main():
-
-
     # Set alpha blending config
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    alpha_img_1 = pyglet.resource.image('2.png')
-    background = pyglet.resource.image('BACK.png')
+    batch = pyglet.graphics.Batch()
+    background = pyglet.graphics.OrderedGroup(0)
+    foreground = pyglet.graphics.OrderedGroup(1)
 
-    alpha_1 = pyglet.sprite.Sprite(alpha_img_1, x=450, y=250)
-    back_1 = pyglet.sprite.Sprite(background, x=0, y=0)
+    sprites = [Sprite(image.load('BACK.png'), batch=batch, x=0, y=0, group=background)]
 
-    animation = pyglet.image.load_animation('giphy.gif')
-    bina = pyglet.image.atlas.TextureBin()
-    animation.add_to_texture_bin(bina)
-    sprite = pyglet.sprite.Sprite(img=animation, x=150, y=250)
-
-    win = Window(width=800, height=600)
+    keys = key.KeyStateHandler()
+    win = Window(width=800, height=600, vsync=False)
 
     @win.event
     def on_draw():
+        win.clear()
+        batch.draw()
+
+    @win.event
+    def on_key_press(symbol, modifiers):
+        current_key = keys
+        # Вставка нового изображения
+        if current_key[key._1]:
+
+            if len(sprites) == 3:
+                sprites[1].delete()
+                sprites.pop(1)
+
+            animation = Sprite(pyglet.resource.animation('1_2.gif'), batch=batch, x=50, y=50, group=foreground)
+            sprites.insert(1, animation)
+
+        elif current_key[key._2]:
+            if len(sprites) == 2:
+                sprites[1].delete()
+                sprites.pop(1)
+
+            animation = Sprite(pyglet.resource.animation('2_1.gif'), batch=batch, x=50, y=50, group=foreground)
+            sprites.insert(1, animation)
+
+        @animation.event
+        def on_animation_end():
+            print("Гифка закончилась!")
+            if len(sprites) == 2:
+                sprites[1].delete()
+                sprites.pop(1)
 
 
-        back_1.draw()
-        alpha_1.draw()
-        sprite.draw()
-
+    win.push_handlers(on_draw, on_key_press, keys)
     app.run()
 
 
