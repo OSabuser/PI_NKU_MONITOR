@@ -1,18 +1,16 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# 11_10_2022 AKIMOV DMITRY, MACH UNIT LLC
 
 import pyglet
 from pyglet import image
 from pyglet.window import Window
 from pyglet.sprite import Sprite
-from pyglet import app
 from pyglet.gl import *
 from pyglet.window import key
 
+import serial
 
-def main():
+if __name__ == '__main__':
+
     # Set alpha blending config
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -21,48 +19,87 @@ def main():
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
-    sprites = [Sprite(image.load('BACK.png'), batch=batch, x=0, y=0, group=background)]
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
+    sprites = [back_img]
 
-    keys = key.KeyStateHandler()
     win = Window(width=800, height=600, vsync=False)
+
 
     @win.event
     def on_draw():
         win.clear()
         batch.draw()
 
-    @win.event
-    def on_key_press(symbol, modifiers):
-        current_key = keys
-        # Вставка нового изображения
-        if current_key[key._1]:
 
-            if len(sprites) == 3:
-                sprites[1].delete()
-                sprites.pop(1)
+    ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
+    print(f"Use instance: {ser.name}")  # check which port was really used
 
-            animation = Sprite(pyglet.resource.animation('1_2.gif'), batch=batch, x=50, y=50, group=foreground)
-            sprites.insert(1, animation)
+    floor_state = ['', '']
+    temp_floor_sprite = Sprite(pyglet.resource.animation(f"1.gif"),
+                               x=50,
+                               y=50,
+                               batch=batch,
+                               group=foreground)
+    temp_floor_sprite.visible = False
 
-        elif current_key[key._2]:
-            if len(sprites) == 2:
-                sprites[1].delete()
-                sprites.pop(1)
+    while True:
+        pyglet.clock.tick()
+        # обработка UART посылок from MCU
+        if ser.inWaiting() > 0:
+            # read the bytes and convert from binary array to ASCII
+            data_str = ser.read(ser.inWaiting()).decode('ascii')
 
-            animation = Sprite(pyglet.resource.animation('2_1.gif'), batch=batch, x=50, y=50, group=foreground)
-            sprites.insert(1, animation)
+            match data_str:
+                # Floor number updating
+                case '0' | '1' | '2' | '3' | '4' | '5':
+                    floor_state[0] = data_str
+                    if floor_state[0] is not floor_state[1] and floor_state[1] != '':
+                        if temp_floor_sprite in sprites:
+                            sprites.remove(temp_floor_sprite)
+                            temp_floor_sprite.delete()
 
-        @animation.event
-        def on_animation_end():
-            print("Гифка закончилась!")
-            if len(sprites) == 2:
-                sprites[1].delete()
-                sprites.pop(1)
+                        animation = Sprite(pyglet.resource.animation(f"{floor_state[1]}_{floor_state[0]}.gif"),
+                                           batch=batch,
+                                           x=50, y=50,
+                                           group=foreground)
+                        sprites.append(animation)
+                        test_floor = floor_state[0]
 
+                        @animation.event
+                        def on_animation_end():
+                            global temp_floor_sprite, animation
+                            if animation in sprites:
+                                sprites.remove(animation)
+                                animation.delete()
+                                print("Гифка закончилась!")
 
-    win.push_handlers(on_draw, on_key_press, keys)
-    app.run()
+                            temp_floor_sprite = Sprite(image.load(f"{test_floor}.gif"),
+                                                       x=50, y=50,
+                                                       batch=batch,
+                                                       group=foreground)
+                            sprites.append(temp_floor_sprite)
 
+                    elif floor_state[0] == floor_state[1]:
+                        if temp_floor_sprite in sprites:
+                            sprites.remove(temp_floor_sprite)
+                            temp_floor_sprite.delete()
 
-if __name__ == '__main__':
-    main()
+                        temp_floor_sprite = Sprite(pyglet.resource.animation(f"{test_floor}.gif"),
+                                                   x=50, y=50,
+                                                   batch=batch,
+                                                   group=foreground)
+                        sprites.append(temp_floor_sprite)
+
+                    print(floor_state)
+                    floor_state[1] = floor_state[0]
+                case _:
+                    print(data_str)
+                    print("Undefined value!!\n")
+
+        # Отрисовка изображения
+        for window in pyglet.app.windows:
+            window.switch_to()
+            window.dispatch_events()
+            window.dispatch_event('on_draw')
+            window.flip()
+
