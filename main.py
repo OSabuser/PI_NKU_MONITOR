@@ -48,17 +48,18 @@ while True:
         floor_state[0] = data_str
 
         if floor_state[0] is not floor_state[1]:
-            animation.delete()
             animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
                                x=50, y=50,
                                group=foreground)
 
-           # @animation.event
-            #def on_animation_end():
 
-            data_str = ''
-            print(floor_state)
-            floor_state[1] = floor_state[0]
+        @animation.event
+        def on_animation_end():
+            animation.delete()
+            
+        data_str = ''
+        print(floor_state)
+        floor_state[1] = floor_state[0]
 
     # Отрисовка изображения
     for window in pyglet.app.windows:
