@@ -52,6 +52,14 @@ while True:
                                   batch=batch,
                                   group=foreground))
 
+        @sprites.event
+        def on_animation_end():
+            global sprites
+            if len(sprites) == 2:
+                temp = sprites.pop(1)
+                sprites[1].delete()
+                sprites.append(temp)
+
         data_str = ''
         print(floor_state)
         floor_state[1] = floor_state[0]
