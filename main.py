@@ -12,6 +12,7 @@ if __name__ == '__main__':
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
+    batch = pyglet.graphics.Batch()
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
@@ -19,11 +20,14 @@ if __name__ == '__main__':
     src_gif = pyglet.resource.animation(f"1.gif")
     animation = Sprite(src_gif,
                        x=50, y=50,
+                       batch=batch,
                        group=foreground)
+
+
 
     win = Window(width=480, height=1920, vsync=False, fullscreen=True)
     win.set_mouse_visible(visible=False)
-    
+
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
     print(f"Use instance: {ser.name}")  # check which port was really used
 
@@ -35,7 +39,8 @@ if __name__ == '__main__':
     def on_draw():
         win.clear()
         back_img.draw()
-        animation.draw()
+       # animation.draw()
+        batch.draw()
 
 while True:
     pyglet.clock.tick()
@@ -51,15 +56,16 @@ while True:
 
         if floor_state[0] is not floor_state[1]:
             animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                               x=50, y=50,
+                               x=50, y=50,batch=batch,
                                group=foreground)
 
-           # @animation.event
-            #def on_animation_end():
 
-            data_str = ''
-            print(floor_state)
-            floor_state[1] = floor_state[0]
+            #@animation.event
+            #def on_animation_end():
+               # animation.visible = False
+        data_str = ''
+        print(floor_state)
+        floor_state[1] = floor_state[0]
 
     # Отрисовка изображения
     for window in pyglet.app.windows:
@@ -67,3 +73,4 @@ while True:
         window.dispatch_events()
         window.dispatch_event('on_draw')
         window.flip()
+
