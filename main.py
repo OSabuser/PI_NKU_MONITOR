@@ -23,7 +23,7 @@ if __name__ == '__main__':
                        batch=batch,
                        group=foreground)
 
-    win = Window(width=480, height=1920, vsync=False, fullscreen=True)
+    win = Window(width=480, height=480, vsync=False, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
@@ -36,40 +36,24 @@ if __name__ == '__main__':
     @win.event
     def on_draw():
         win.clear()
-        back_img.draw()
+       # back_img.draw()
        # animation.draw()
         batch.draw()
 
+    @animation.event
+    def on_animation_end():
+        animation.visible = False
 
-while True:
-    pyglet.clock.tick()
 
-    # обработка UART посылок from MCU
-    if ser.inWaiting() > 0:
-        # read the bytes and convert from binary array to ASCII
-        data_str = ser.read(ser.inWaiting()).decode('ascii')
+    def update(dt):
+        print("TEST!")
+        pyglet.clock.schedule_interval(update, 1)
 
-    if data_str in ok_list:
 
-        floor_state[0] = data_str
+    pyglet.app.run()
 
-      #  if floor_state[0] is not floor_state[1]:
-           # if animation is not None:
-               # animation.delete()
-           # animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                               #x=50, y=50, batch=batch,
-                               #group=foreground)
-            #@animation.event
-            #def on_animation_end():
-               # animation.visible = False
-        data_str = ''
-        print(floor_state)
-        floor_state[1] = floor_state[0]
 
-    # Отрисовка изображения
-    for window in pyglet.app.windows:
-        window.switch_to()
-        window.dispatch_events()
-        window.dispatch_event('on_draw')
-        window.flip()
+
+
+
 
