@@ -23,7 +23,7 @@ if __name__ == '__main__':
                        x=50, y=50,
                        group=foreground)
 
-    win = Window(width=480, height=1920, vsync=False, fullscreen=True)
+    win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
@@ -31,17 +31,19 @@ if __name__ == '__main__':
 
     floor_state = ['0', '0']
     ok_list = ('1', '2', '3', '4', '5')
+    can_refresh = False
 
 
     def update(dt):
-        global floor_state, animation
+        global floor_state, animation, can_refresh
         data_str = ''
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
 
-        if data_str in ok_list:
+        if data_str in ok_list and can_refresh is True:
+            can_refresh = False
             floor_state[0] = data_str
             if floor_state[0] is not floor_state[1]:
                 animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
@@ -61,7 +63,10 @@ if __name__ == '__main__':
         animation.draw()
 
 
-    # @animation.event
-    # def on_animation_end():
-    # animation.visible = False
+    @animation.event
+    def on_animation_end():
+        global can_refresh
+        can_refresh = True
+
+
     pyglet.app.run()
