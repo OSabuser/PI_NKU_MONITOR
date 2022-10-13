@@ -53,12 +53,12 @@ while True:
 
         floor_state[0] = data_str
 
-        if floor_state[0] is not floor_state[1]:
-            if animation is not None:
-                animation.delete()
-            animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                               x=50, y=50, batch=batch,
-                               group=foreground)
+      #  if floor_state[0] is not floor_state[1]:
+           # if animation is not None:
+               # animation.delete()
+           # animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
+                               #x=50, y=50, batch=batch,
+                               #group=foreground)
             #@animation.event
             #def on_animation_end():
                # animation.visible = False
