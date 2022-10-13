@@ -55,8 +55,9 @@ while True:
 
         @animation.event
         def on_animation_end():
+            global animation
             animation.delete()
-            
+
         data_str = ''
         print(floor_state)
         floor_state[1] = floor_state[0]
