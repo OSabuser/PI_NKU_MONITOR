@@ -5,7 +5,8 @@ from pyglet import image
 from pyglet.window import Window
 from pyglet.sprite import Sprite
 from pyglet.gl import *
-import serial
+
+# import serial
 
 if __name__ == '__main__':
     # Set alpha blending config
@@ -31,29 +32,40 @@ if __name__ == '__main__':
 
     floor_state = ['0', '0']
     ok_list = ('1', '2', '3', '4', '5')
-    data_str = []
+
+
+    def update(dt):
+        global floor_state, animation
+        # обработка UART посылок from MCU
+        if ser.inWaiting() > 0:
+            # read the bytes and convert from binary array to ASCII
+            data_str = ser.read(ser.inWaiting()).decode('ascii')
+
+        if data_str in ok_list:
+            floor_state[0] = data_str
+
+            if floor_state[0] is not floor_state[1]:
+                if animation is not None:
+                    animation.delete()
+
+                animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
+                                   x=50, y=50, batch=batch,
+                                   group=foreground)
+            print(floor_state)
+            floor_state[1] = floor_state[0]
+
+
+    pyglet.clock.schedule_interval(update, 0.1)
+
 
     @win.event
     def on_draw():
         win.clear()
-       # back_img.draw()
-       # animation.draw()
+        back_img.draw()
         batch.draw()
 
-    @animation.event
-    def on_animation_end():
-        animation.visible = False
 
-
-    def update(dt):
-        print("TEST!")
-        pyglet.clock.schedule_interval(update, 1)
-
-
+    # @animation.event
+    # def on_animation_end():
+    # animation.visible = False
     pyglet.app.run()
-
-
-
-
-
-
