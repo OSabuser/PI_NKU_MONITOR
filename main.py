@@ -21,7 +21,6 @@ if __name__ == '__main__':
     src_gif = pyglet.resource.animation(f"1.gif")
     animation = Sprite(src_gif,
                        x=50, y=50,
-                       batch=batch,
                        group=foreground)
 
     win = Window(width=480, height=1920, vsync=False, fullscreen=True)
@@ -44,11 +43,7 @@ if __name__ == '__main__':
 
         if data_str in ok_list:
             floor_state[0] = data_str
-
             if floor_state[0] is not floor_state[1]:
-                if animation is not None:
-                    animation.delete()
-
                 animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
                                    x=50, y=50, batch=batch,
                                    group=foreground)
@@ -63,7 +58,7 @@ if __name__ == '__main__':
     def on_draw():
         win.clear()
         back_img.draw()
-        batch.draw()
+        animation.draw()
 
 
     # @animation.event
