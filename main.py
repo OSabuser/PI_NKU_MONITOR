@@ -47,10 +47,11 @@ while True:
         floor_state[0] = data_str
 
         if floor_state[0] is not floor_state[1]:
-            sprites.insert(0, Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
+            sprites.insert(2, Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
                                      x=50, y=50,
                                      batch=batch,
                                      group=foreground))
+
         data_str = ''
         print(floor_state)
         floor_state[1] = floor_state[0]
