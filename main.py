@@ -45,10 +45,10 @@ while True:
         data_str = ser.read(ser.inWaiting()).decode('ascii')
 
     if data_str in ok_list:
-
         floor_state[0] = data_str
 
         if floor_state[0] is not floor_state[1]:
+            animation.delete()
             animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
                                x=50, y=50,
                                group=foreground)
