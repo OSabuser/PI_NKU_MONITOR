@@ -23,6 +23,7 @@ if __name__ == '__main__':
                        group=foreground)
     sprites = [back_img, animation]
     win = Window(width=480, height=1920, vsync=False, fullscreen=True)
+    win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
     print(f"Use instance: {ser.name}")  # check which port was really used
@@ -36,10 +37,8 @@ if __name__ == '__main__':
         win.clear()
         batch.draw()
 
-
     @animation.event
     def on_animation_end():
-        global animation
         animation.delete()
 
 while True:
@@ -65,6 +64,5 @@ while True:
     for window in pyglet.app.windows:
         window.switch_to()
         window.dispatch_events()
-        window.dispatch_event('on_draw', 'on_animation_end')
-
+        window.dispatch_event('on_draw')
         window.flip()
