@@ -23,8 +23,6 @@ if __name__ == '__main__':
                        batch=batch,
                        group=foreground)
 
-
-
     win = Window(width=480, height=1920, vsync=False, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
@@ -42,6 +40,7 @@ if __name__ == '__main__':
        # animation.draw()
         batch.draw()
 
+
 while True:
     pyglet.clock.tick()
 
@@ -56,8 +55,9 @@ while True:
 
         if floor_state[0] is not floor_state[1]:
             animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                               x=50, y=50,batch=batch,
+                               x=50, y=50, batch=batch,
                                group=foreground)
+            batch.invalidate()
 
 
             #@animation.event
