@@ -17,16 +17,14 @@ if __name__ == '__main__':
     foreground = pyglet.graphics.OrderedGroup(1)
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
-    sprites = [back_img]
+    src_gif = pyglet.resource.animation(f"1.gif")
+    animation = Sprite(src_gif,
+                       x=50, y=50,
+                       batch=batch,
+                       group=foreground)
+    sprites = [back_img, animation]
 
     win = Window(width=480, height=1920, vsync=False)
-
-
-    @win.event
-    def on_draw():
-        win.clear()
-        batch.draw()
-
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
     print(f"Use instance: {ser.name}")  # check which port was really used
@@ -34,6 +32,12 @@ if __name__ == '__main__':
     floor_state = ['0', '0']
     ok_list = ('1', '2', '3', '4', '5')
     data_str = []
+
+
+    @win.event
+    def on_draw():
+        win.clear()
+        batch.draw()
 
 while True:
     pyglet.clock.tick()
@@ -44,25 +48,21 @@ while True:
         data_str = ser.read(ser.inWaiting()).decode('ascii')
 
     if data_str in ok_list:
+    
         floor_state[0] = data_str
 
         if floor_state[0] is not floor_state[1]:
-            sprites.append(Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                                  x=50, y=50,
-                                  batch=batch,
-                                  group=foreground))
+            if animation in sprites:
+                animation.delete()
+                sprites.remove(animation)
 
-            temp = sprites[1]
-
-
-            @temp.event
-            def on_animation_end():
-                global sprites
-                if len(sprites) == 2:
-                    temp1 = sprites.pop(1)
-                    sprites[1].delete()
-                    sprites.append(temp1)
-
+            animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
+                               x=50, y=50,
+                               batch=batch,
+                               group=foreground)
+            sprites.append(animation)
+           # @animation.event
+            #def on_animation_end():
 
             data_str = ''
             print(floor_state)
