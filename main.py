@@ -59,9 +59,9 @@ while True:
             def on_animation_end():
                 global sprites
                 if len(sprites) == 2:
-                    temp = sprites.pop(1)
+                    temp1 = sprites.pop(1)
                     sprites[1].delete()
-                    sprites.append(temp)
+                    sprites.append(temp1)
 
 
             data_str = ''
