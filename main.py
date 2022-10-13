@@ -20,7 +20,7 @@ if __name__ == '__main__':
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
     sprites = [back_img]
 
-    win = Window(width=800, height=600, vsync=False)
+    win = Window(width=480, height=1920, vsync=False)
 
 
     @win.event
