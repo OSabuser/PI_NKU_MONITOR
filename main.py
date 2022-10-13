@@ -12,17 +12,16 @@ if __name__ == '__main__':
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-   # batch = pyglet.graphics.Batch()
+    batch = pyglet.graphics.Batch()
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
     src_gif = pyglet.resource.animation(f"1.gif")
     animation = Sprite(src_gif,
-                       x=50, y=50,
+                       x=50, y=50, batch=batch,
                        group=foreground)
     sprites = [back_img, animation]
-
     win = Window(width=480, height=1920, vsync=False, fullscreen=True)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
@@ -32,12 +31,10 @@ if __name__ == '__main__':
     ok_list = ('1', '2', '3', '4', '5')
     data_str = []
 
-
     @win.event
     def on_draw():
         win.clear()
-        back_img.draw()
-        animation.draw()
+        batch.draw()
 
 while True:
     pyglet.clock.tick()
