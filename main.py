@@ -36,6 +36,12 @@ if __name__ == '__main__':
         win.clear()
         batch.draw()
 
+
+    @animation.event
+    def on_animation_end():
+        global animation
+        animation.delete()
+
 while True:
     pyglet.clock.tick()
 
@@ -51,13 +57,6 @@ while True:
             animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
                                x=50, y=50,
                                group=foreground)
-
-
-        @animation.event
-        def on_animation_end():
-            global animation
-            animation.delete()
-
         data_str = ''
         print(floor_state)
         floor_state[1] = floor_state[0]
@@ -66,5 +65,6 @@ while True:
     for window in pyglet.app.windows:
         window.switch_to()
         window.dispatch_events()
-        window.dispatch_event('on_draw')
+        window.dispatch_event('on_draw', 'on_animation_end')
+
         window.flip()
