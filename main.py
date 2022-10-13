@@ -12,15 +12,14 @@ if __name__ == '__main__':
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    batch = pyglet.graphics.Batch()
+   # batch = pyglet.graphics.Batch()
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
     src_gif = pyglet.resource.animation(f"1.gif")
     animation = Sprite(src_gif,
                        x=50, y=50,
-                       batch=batch,
                        group=foreground)
     sprites = [back_img, animation]
 
@@ -37,7 +36,8 @@ if __name__ == '__main__':
     @win.event
     def on_draw():
         win.clear()
-        batch.draw()
+        back_img.draw()
+        animation.draw()
 
 while True:
     pyglet.clock.tick()
@@ -48,19 +48,14 @@ while True:
         data_str = ser.read(ser.inWaiting()).decode('ascii')
 
     if data_str in ok_list:
-    
+
         floor_state[0] = data_str
 
         if floor_state[0] is not floor_state[1]:
-            if animation in sprites:
-                animation.delete()
-                sprites.remove(animation)
-
             animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
                                x=50, y=50,
-                               batch=batch,
                                group=foreground)
-            sprites.append(animation)
+
            # @animation.event
             #def on_animation_end():
 
