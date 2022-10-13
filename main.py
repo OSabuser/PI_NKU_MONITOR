@@ -6,7 +6,7 @@ from pyglet.window import Window
 from pyglet.sprite import Sprite
 from pyglet.gl import *
 
-# import serial
+import serial
 
 if __name__ == '__main__':
     # Set alpha blending config
