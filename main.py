@@ -5,8 +5,6 @@ from pyglet import image
 from pyglet.window import Window
 from pyglet.sprite import Sprite
 from pyglet.gl import *
-from pyglet.window import key
-
 import serial
 
 if __name__ == '__main__':
