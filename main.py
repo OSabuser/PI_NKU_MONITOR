@@ -23,7 +23,7 @@ if __name__ == '__main__':
                        group=foreground)
     sprites = [back_img, animation]
 
-    win = Window(width=480, height=1920, vsync=False)
+    win = Window(width=480, height=1920, vsync=False, fullscreen=True)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
     print(f"Use instance: {ser.name}")  # check which port was really used
