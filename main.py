@@ -24,7 +24,7 @@ if __name__ == '__main__':
                        batch=batch,
                        group=foreground)
 
-    win = Window(width=480, height=480, vsync=False, fullscreen=True)
+    win = Window(width=480, height=1920, vsync=False, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
@@ -36,6 +36,7 @@ if __name__ == '__main__':
 
     def update(dt):
         global floor_state, animation
+        data_str = ''
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
