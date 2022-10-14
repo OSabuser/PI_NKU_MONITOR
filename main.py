@@ -51,7 +51,7 @@ if __name__ == '__main__':
             floor_state[0] = data_str
 
             if floor_state[0] is not floor_state[1]:
-                animation = gifs[floor_state[0]]
+                animation = gifs[int(floor_state[0] - '0')]
 
             data_str = ''
             print(floor_state)
