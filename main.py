@@ -35,6 +35,8 @@ if __name__ == '__main__':
 
 
     def draw_everything(dt):
+        win.clear()
+        back_img.draw()
         animation.draw()
 
     @win.event
