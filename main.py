@@ -18,7 +18,7 @@ if __name__ == '__main__':
     foreground = pyglet.graphics.OrderedGroup(1)
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
-    src_gif = pyglet.resource.animation(f"1.gif")
+    src_gif = pyglet.resource.animation(f"4.gif")
     animation = Sprite(src_gif,
                        x=50, y=150,
                        group=foreground)
@@ -34,7 +34,19 @@ if __name__ == '__main__':
     can_refresh = False
 
     def second_thread(dt):
-        print('Second handler')
+        # обработка UART посылок from MCU
+        if ser.inWaiting() > 0:
+            # read the bytes and convert from binary array to ASCII
+            data_str = ser.read(ser.inWaiting()).decode('ascii')
+
+        if data_str in ok_list:
+
+            floor_state[0] = data_str
+
+            if floor_state[0] is not floor_state[1]:
+                data_str = ''
+                print(floor_state)
+                floor_state[1] = floor_state[0]
 
     def draw_everything(dt):
         win.clear()
