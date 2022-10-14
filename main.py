@@ -52,7 +52,8 @@ if __name__ == '__main__':
 
             if floor_state[0] is not floor_state[1]:
                 idx = int(floor_state[0])
-                animation = gifs[idx]
+                if idx in range(1, 6):
+                    animation = gifs[idx]
 
             data_str = ''
             print(floor_state)
