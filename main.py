@@ -20,7 +20,7 @@ if __name__ == '__main__':
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
     src_gif = pyglet.resource.animation(f"1.gif")
     animation = Sprite(src_gif,
-                       x=50, y=50,
+                       x=50, y=150,
                        group=foreground)
 
     win = Window(width=480, height=1920, fullscreen=True)
@@ -47,12 +47,13 @@ if __name__ == '__main__':
             floor_state[0] = data_str
             if floor_state[0] is not floor_state[1]:
                 animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                                   x=50, y=50, batch=batch,
+                                   x=50, y=150, batch=batch,
                                    group=foreground)
             print(floor_state)
             floor_state[1] = floor_state[0]
 
 
+    pyglet.clock.set_fps_limit(60)
     pyglet.clock.schedule_interval(update, 0.1)
 
 
