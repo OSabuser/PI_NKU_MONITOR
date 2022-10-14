@@ -33,7 +33,9 @@ if __name__ == '__main__':
     ok_list = ('1', '2', '3', '4', '5')
     can_refresh = False
 
+
     def second_thread(dt):
+        data_str = ''
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
@@ -48,10 +50,12 @@ if __name__ == '__main__':
                 print(floor_state)
                 floor_state[1] = floor_state[0]
 
+
     def draw_everything(dt):
         win.clear()
         back_img.draw()
         animation.draw()
+
 
     @win.event
     def on_draw():
