@@ -19,11 +19,11 @@ if __name__ == '__main__':
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
 
-    gifs = ()
-    for idx in range(1, 6):
-        gifs.append(Sprite(f"{idx}.gif",
-                           x=50, y=50,
-                           group=foreground))
+    gifs = (Sprite(f"1.gif", x=50, y=50, group=foreground),
+            Sprite(f"2.gif", x=50, y=50, group=foreground),
+            Sprite(f"3.gif", x=50, y=50, group=foreground),
+            Sprite(f"4.gif", x=50, y=50, group=foreground),
+            Sprite(f"5.gif", x=50, y=50, group=foreground))
 
     animation = gifs[0]
 
