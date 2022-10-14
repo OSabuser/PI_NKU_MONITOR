@@ -34,34 +34,12 @@ if __name__ == '__main__':
     can_refresh = False
 
 
-    def update(dt):
-        global floor_state, animation, can_refresh
-        data_str = ''
-        # обработка UART посылок from MCU
-        if ser.inWaiting() > 0:
-            # read the bytes and convert from binary array to ASCII
-            data_str = ser.read(ser.inWaiting()).decode('ascii')
-
-        if data_str in ok_list and can_refresh is True:
-            can_refresh = False
-            floor_state[0] = data_str
-            if floor_state[0] is not floor_state[1]:
-                animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                                   x=50, y=150, batch=batch,
-                                   group=foreground)
-            print(floor_state)
-            floor_state[1] = floor_state[0]
-
-
-    pyglet.clock.set_fps_limit(60)
-    pyglet.clock.schedule_interval(update, 0.1)
-
+    def draw_everything(dt):
+        animation.draw()
 
     @win.event
     def on_draw():
-        win.clear()
-        back_img.draw()
-        animation.draw()
+        draw_everything(None)
 
 
     @animation.event
@@ -70,4 +48,5 @@ if __name__ == '__main__':
         can_refresh = True
 
 
+    pyglet.clock.schedule_interval(draw_everything, 1 / 60)
     pyglet.app.run()
