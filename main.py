@@ -18,10 +18,14 @@ if __name__ == '__main__':
     foreground = pyglet.graphics.OrderedGroup(1)
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
-    src_gif = pyglet.resource.animation(f"4.gif")
-    animation = Sprite(src_gif,
-                       x=50, y=150,
-                       group=foreground)
+
+    gifs = ()
+    for idx in range(1, 6):
+        gifs.append(Sprite(f"{idx}.gif",
+                           x=50, y=50,
+                           group=foreground))
+
+    animation = gifs[0]
 
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
@@ -47,10 +51,7 @@ if __name__ == '__main__':
             floor_state[0] = data_str
 
             if floor_state[0] is not floor_state[1]:
-
-                animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
-                                   x=50, y=50,
-                                   group=foreground)
+                animation = gifs[floor_state[0]]
 
             data_str = ''
             print(floor_state)
