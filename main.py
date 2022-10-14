@@ -35,6 +35,7 @@ if __name__ == '__main__':
 
 
     def second_thread(dt):
+        global animation
         data_str = ''
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
@@ -46,9 +47,14 @@ if __name__ == '__main__':
             floor_state[0] = data_str
 
             if floor_state[0] is not floor_state[1]:
-                data_str = ''
-                print(floor_state)
-                floor_state[1] = floor_state[0]
+
+                animation = Sprite(pyglet.resource.animation(f"{floor_state[0]}.gif"),
+                                   x=50, y=50,
+                                   group=foreground)
+
+            data_str = ''
+            print(floor_state)
+            floor_state[1] = floor_state[0]
 
 
     def draw_everything(dt):
