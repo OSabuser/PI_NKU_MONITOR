@@ -33,6 +33,8 @@ if __name__ == '__main__':
     ok_list = ('1', '2', '3', '4', '5')
     can_refresh = False
 
+    def second_thread(dt):
+        print('Second handler')
 
     def draw_everything(dt):
         win.clear()
@@ -50,5 +52,6 @@ if __name__ == '__main__':
         can_refresh = True
 
 
+    pyglet.clock.schedule_interval(second_thread, 1)
     pyglet.clock.schedule_interval(draw_everything, 1 / 60)
     pyglet.app.run()
