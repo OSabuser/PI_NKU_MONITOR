@@ -20,11 +20,16 @@ if __name__ == '__main__':
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
 
     gifs = []
+    arrows = []
 
     for element in range(1, 6):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=50, y=50, group=foreground))
 
+    arrows.append(Sprite(image.load('UP.png'), x=0, y=350, group=foreground))
+    arrows.append(Sprite(image.load('DOWN.png'), x=0, y=350, group=foreground))
+
     animation = gifs[0]
+    arrow = arrows[0]
 
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
@@ -62,6 +67,7 @@ if __name__ == '__main__':
     def draw_everything(dt):
         win.clear()
         back_img.draw()
+        arrow.draw()
         animation.draw()
 
 
