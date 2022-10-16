@@ -41,10 +41,11 @@ if __name__ == '__main__':
     arrow_state = ['0', '0']
     ok_list = ('1', '2', '3', '4', '5')
     can_refresh = False
-    floor_number =''
+    floor_number = ''
+    arrow = ''
 
     def second_thread(dt):
-        global animation, floor_number
+        global animation, floor_number, arrow
 
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
@@ -52,6 +53,8 @@ if __name__ == '__main__':
             data_str = ser.read(ser.inWaiting()).decode('ascii')
             print(data_str)
             floor_number = data_str[1]
+            arrow = data_str[3:4]
+            print(arrow)
 
         if floor_number in ok_list:
             floor_state[0] = floor_number
