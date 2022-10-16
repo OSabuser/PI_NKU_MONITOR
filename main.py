@@ -44,6 +44,7 @@ if __name__ == '__main__':
     floor_number = ''
     arrow_img = ''
 
+
     def second_thread(dt):
         global animation, floor_number, arrow_img
 
@@ -52,8 +53,8 @@ if __name__ == '__main__':
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
             print(data_str)
-            floor_number = data_str[1]
-            arrow_img = data_str[3:4]
+            floor_number = data_str[1]  # Get floor number
+            arrow_img = data_str[3:5]  # Get direction state
             print(arrow_img)
 
         if floor_number in ok_list:
