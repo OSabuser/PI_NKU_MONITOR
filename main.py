@@ -29,7 +29,7 @@ if __name__ == '__main__':
     arrows.append(Sprite(image.load('DOWN.png'), x=75, y=650, group=foreground))
 
     animation = gifs[0]
-    arrow = arrows[0]
+    arrow_img = arrows[0]
 
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
@@ -42,38 +42,44 @@ if __name__ == '__main__':
     ok_list = ('1', '2', '3', '4', '5')
     can_refresh = False
     floor_number = ''
-    arrow_img = ''
+    direction = ''
 
 
     def second_thread(dt):
-        global animation, floor_number, arrow_img
+        global animation, arrow_img, floor_number, direction
 
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
-            print(data_str)
             floor_number = data_str[1]  # Get floor number
-            arrow_img = data_str[3:5]  # Get direction state
-            print(arrow_img)
+            direction = data_str[3:5]  # Get direction state
 
         if floor_number in ok_list:
             floor_state[0] = floor_number
+            arrow_state[0] = direction
 
             if floor_state[0] is not floor_state[1]:
                 idx = int(floor_state[0])
                 if idx in range(0, 5):
                     animation = gifs[idx]
 
+            if arrow_state[0] is not arrow_state[1]:
+                if arrow_state[0] == 'UP':
+                    arrow_img = arrows[0]
+                elif arrow_state[0] == 'DL':
+                    arrow_img = arrows[1]
+
             floor_number = ''
-            print(floor_state)
+            direction = ''
             floor_state[1] = floor_state[0]
+            arrow_state[1] = arrow_state[0]
 
 
     def draw_everything(dt):
         win.clear()
         back_img.draw()
-        arrow.draw()
+        arrow_img.draw()
         animation.draw()
 
 
