@@ -37,7 +37,6 @@ if __name__ == '__main__':
     win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
-    print(f"Use instance: {ser.name}")  # check which port was really used
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
@@ -54,7 +53,9 @@ if __name__ == '__main__':
         # UART message handling from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
-            data_str = ser.read(ser.inWaiting()).decode('ascii')
+            data_str = ser.read(ser.inWaiting())
+            #.decode('ascii')
+            print(data_str)
             if len(data_str) >= 5:
                 floor_number = data_str[1]  # Get floor number
                 direction = data_str[3:5]  # Get direction state
