@@ -19,15 +19,14 @@ if __name__ == '__main__':
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
 
-    gifs = [Sprite(pyglet.resource.animation(f"1.gif"), x=50, y=50, group=foreground),
-            Sprite(pyglet.resource.animation(f"2.gif"), x=50, y=50, group=foreground),
-            Sprite(pyglet.resource.animation(f"3.gif"), x=50, y=50, group=foreground),
-            Sprite(pyglet.resource.animation(f"4.gif"), x=50, y=50, group=foreground),
-            Sprite(pyglet.resource.animation(f"5.gif"), x=50, y=50, group=foreground)]
+    gifs = []
+
+    for element in range(1, 6):
+        gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=50, y=50, group=foreground))
 
     animation = gifs[0]
 
-    win = Window(width=480, height=1920, fullscreen=True)
+    win = Window(width=480, height=480, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
