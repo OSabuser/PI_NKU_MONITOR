@@ -45,13 +45,13 @@ if __name__ == '__main__':
 
     def second_thread(dt):
         global animation
-        data_str = ''
+        data_str = ""
         # обработка UART посылок from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
-            print(data_str)
-        if data_str[1] in ok_list:
+            print(data_str[1])
+        if data_str in ok_list:
 
             floor_state[0] = data_str
 
