@@ -53,7 +53,7 @@ if __name__ == '__main__':
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
-            if len(data_str) >= 6:
+            if len(data_str) >= 5:
                 floor_number = data_str[1]  # Get floor number
                 direction = data_str[3:5]  # Get direction state
 
