@@ -43,7 +43,8 @@ if __name__ == '__main__':
     can_refresh = False
     floor_number = ''
     direction = ''
-
+    animation.visible = False
+    arrow_img.visible = False
 
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
@@ -62,13 +63,15 @@ if __name__ == '__main__':
             if floor_state[0] is not floor_state[1]:
                 idx = int(floor_state[0])
                 if idx in range(0, 5):
+                    animation.visible = True
                     animation = gifs[idx]
-                    animation.visible = False
 
             if arrow_state[0] is not arrow_state[1]:
                 if arrow_state[0] == 'UP':
+                    arrow_img.visible = True
                     arrow_img = arrows[0]
                 elif arrow_state[0] == 'DL':
+                    arrow_img.visible = True
                     arrow_img = arrows[1]
 
             floor_number = ''
