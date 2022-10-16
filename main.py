@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     animation = gifs[0]
 
-    win = Window(width=480, height=480, fullscreen=True)
+    win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
