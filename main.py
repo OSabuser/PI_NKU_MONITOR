@@ -25,8 +25,8 @@ if __name__ == '__main__':
     for element in range(1, 6):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=50, y=50, group=foreground))
 
-    arrows.append(Sprite(image.load('UP.png'), x=80, y=650, group=foreground))
-    arrows.append(Sprite(image.load('DOWN.png'), x=80, y=650, group=foreground))
+    arrows.append(Sprite(image.load('UP.png'), x=75, y=650, group=foreground))
+    arrows.append(Sprite(image.load('DOWN.png'), x=75, y=650, group=foreground))
 
     animation = gifs[0]
     arrow = arrows[0]
@@ -38,6 +38,7 @@ if __name__ == '__main__':
     print(f"Use instance: {ser.name}")  # check which port was really used
 
     floor_state = ['0', '0']
+    arrow_state = ['0', '0']
     ok_list = ('1', '2', '3', '4', '5')
     can_refresh = False
 
@@ -49,7 +50,7 @@ if __name__ == '__main__':
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
-
+            print(data_str)
         if data_str in ok_list:
 
             floor_state[0] = data_str
@@ -66,9 +67,9 @@ if __name__ == '__main__':
 
     def draw_everything(dt):
         win.clear()
-        back_img.draw()
-        arrow.draw()
-        animation.draw()
+        #back_img.draw()
+       # arrow.draw()
+        #animation.draw()
 
 
     @win.event
