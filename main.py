@@ -51,7 +51,7 @@ if __name__ == '__main__':
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
             print(data_str)
-        if data_str in ok_list:
+        if data_str[1] in ok_list:
 
             floor_state[0] = data_str
 
@@ -67,9 +67,9 @@ if __name__ == '__main__':
 
     def draw_everything(dt):
         win.clear()
-        #back_img.draw()
-       # arrow.draw()
-        #animation.draw()
+        back_img.draw()
+        arrow.draw()
+        animation.draw()
 
 
     @win.event
