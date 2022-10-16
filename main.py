@@ -63,6 +63,7 @@ if __name__ == '__main__':
                 idx = int(floor_state[0])
                 if idx in range(0, 5):
                     animation = gifs[idx]
+                    animation.visible = False
 
             if arrow_state[0] is not arrow_state[1]:
                 if arrow_state[0] == 'UP':
