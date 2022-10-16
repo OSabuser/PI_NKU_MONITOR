@@ -74,6 +74,8 @@ if __name__ == '__main__':
                 elif arrow_state[0] == 'DL':
                     arrow_img.visible = True
                     arrow_img = arrows[1]
+                elif arrow_state[0] == 'NN':
+                    arrow_img.visible = False
 
             floor_number = ''
             direction = ''
