@@ -8,12 +8,14 @@ from pyglet.gl import *
 
 import serial
 
+# TODO: 1. try, except на критически важные блоки кода
+# TODO: 2. Статические изображения + анимации
+
 if __name__ == '__main__':
     # Set alpha blending config
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    batch = pyglet.graphics.Batch()
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
@@ -34,7 +36,7 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
-    ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600)  # open serial port
+    ser = serial.Serial(port='/dev/ttyAMA0', baudrate=9600)  # open serial port
     print(f"Use instance: {ser.name}")  # check which port was really used
 
     floor_state = ['0', '0']
