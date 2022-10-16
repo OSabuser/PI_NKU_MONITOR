@@ -49,7 +49,7 @@ if __name__ == '__main__':
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
 
-        # обработка UART посылок from MCU
+        # UART message handling from MCU
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
@@ -62,7 +62,7 @@ if __name__ == '__main__':
             arrow_state[0] = direction
 
             if floor_state[0] is not floor_state[1]:  # Draw floor number
-                idx = int(floor_state[0])
+                idx = int(floor_state[0]) - 1
                 if idx in range(0, 5):
                     animation.visible = True
                     animation = gifs[idx]
