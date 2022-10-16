@@ -53,20 +53,21 @@ if __name__ == '__main__':
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
-            floor_number = data_str[1]  # Get floor number
-            direction = data_str[3:5]  # Get direction state
+            if len(data_str) >= 6:
+                floor_number = data_str[1]  # Get floor number
+                direction = data_str[3:5]  # Get direction state
 
         if floor_number in ok_list:
             floor_state[0] = floor_number
             arrow_state[0] = direction
 
-            if floor_state[0] is not floor_state[1]:
+            if floor_state[0] is not floor_state[1]:  # Draw floor number
                 idx = int(floor_state[0])
                 if idx in range(0, 5):
                     animation.visible = True
                     animation = gifs[idx]
 
-            if arrow_state[0] is not arrow_state[1]:
+            if arrow_state[0] is not arrow_state[1]:  # Draw arrow
                 if arrow_state[0] == 'UP':
                     arrow_img.visible = True
                     arrow_img = arrows[0]
@@ -98,6 +99,6 @@ if __name__ == '__main__':
         can_refresh = True
 
 
-    pyglet.clock.schedule_interval(second_thread, 1)
+    pyglet.clock.schedule_interval(second_thread, 0.5)
     pyglet.clock.schedule_interval(draw_everything, 1 / 60)
     pyglet.app.run()
