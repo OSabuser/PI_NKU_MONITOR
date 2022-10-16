@@ -36,7 +36,7 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
-    ser = serial.Serial(port='/dev/ttyAMA0', baudrate=9600)  # open serial port
+    ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
     print(f"Use instance: {ser.name}")  # check which port was really used
 
     floor_state = ['0', '0']
