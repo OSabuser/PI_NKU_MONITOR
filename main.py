@@ -22,14 +22,14 @@ if __name__ == '__main__':
     gifs = []
     arrows = []
 
-    for element in range(1, 6):
+    for element in range(1, 2):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=1030, group=foreground))
 
-    arrows.append(Sprite(image.load('UP.gif'), x=0, y=550, group=foreground))
-    arrows.append(Sprite(image.load('DOWN.gif'), x=0, y=550, group=foreground))
+    #arrows.append(Sprite(image.load('UP.gif'), x=0, y=550, group=foreground))
+    #arrows.append(Sprite(image.load('DOWN.gif'), x=0, y=550, group=foreground))
 
     animation = gifs[0]
-    arrow_img = arrows[0]
+    arrow_img = gifs[0]
 
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
@@ -65,10 +65,10 @@ if __name__ == '__main__':
             arrow_state[0] = direction
 
             if floor_state[0] is not floor_state[1]:  # Draw floor number
-                idx = int(floor_state[0]) - 1
-                if idx in range(0, 5):
+                idx = int(floor_state[0])
+                if idx in range(1, 6):
                     animation.visible = True
-                    animation = gifs[idx]
+                    animation = gifs.append(Sprite(pyglet.resource.animation(f"{idx}.gif"), x=0, y=1030, group=foreground))
 
             if arrow_state[0] is not arrow_state[1]:  # Draw arrow
                 if arrow_state[0] == 'UP':
