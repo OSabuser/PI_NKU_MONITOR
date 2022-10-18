@@ -81,7 +81,8 @@ if __name__ == '__main__':
                     arrow_img = Sprite(pyglet.resource.animation('DOWN.gif'), x=0, y=550, group=foreground)
                     arrow_img.visible = True
                 elif arrow_state[0] == 'NN':
-                    arrow_img.visible = False
+                    if arrow_img.visible:
+                        arrow_img.visible = False
 
             floor_number = ''
             direction = ''
