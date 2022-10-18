@@ -7,6 +7,10 @@ from pyglet.sprite import Sprite
 from pyglet.gl import *
 
 import serial
+from serial import SerialException
+
+uart0_port_name = '/./dev/ttyAMA0'
+uart0_baud = 115200
 
 # TODO: 1. try, except на критически важные блоки кода
 # TODO: 2. Статические изображения + анимации
@@ -34,7 +38,14 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
-    ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
+    while True:
+        try:
+            ser = serial.Serial(port=uart0_port_name, baudrate=uart0_baud)  # open serial port
+        except SerialException:
+            print('Serial port connection error!\n')
+            pass
+        else:
+            break
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
@@ -45,9 +56,10 @@ if __name__ == '__main__':
     animation.visible = False
     arrow_img.visible = False
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground)
-    qr_img = Sprite(pyglet.resource.animation(f"QR.gif"), x=80, y=80, group=foreground)
+    batch = pyglet.graphics.Batch()
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background, batch=batch)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground, batch=batch)
+    qr_img = Sprite(pyglet.resource.animation(f"QR.gif"), x=80, y=80, group=foreground, batch=batch)
 
 
     def second_thread(dt):
@@ -90,9 +102,7 @@ if __name__ == '__main__':
 
     def draw_everything(dt):
         win.clear()
-        back_img.draw()
-        logo_img.draw()
-        qr_img.draw()
+        batch.draw()
         arrow_img.draw()
         animation.draw()
 
