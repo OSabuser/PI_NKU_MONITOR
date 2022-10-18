@@ -73,10 +73,10 @@ if __name__ == '__main__':
             if arrow_state[0] is not arrow_state[1]:  # Draw arrow
                 if arrow_state[0] == 'UP':
                     arrow_img.visible = True
-                    arrow_img = arrows[0]
+                    arrow_img = Sprite(pyglet.resource.animation('UP.gif'), x=0, y=550, group=foreground)
                 elif arrow_state[0] == 'DL':
                     arrow_img.visible = True
-                    arrow_img = arrows[1]
+                    arrow_img = Sprite(pyglet.resource.animation('DOWN.gif'), x=0, y=550, group=foreground)
                 elif arrow_state[0] == 'NN':
                     arrow_img.visible = False
 
