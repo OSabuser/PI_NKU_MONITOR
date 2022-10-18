@@ -23,10 +23,10 @@ if __name__ == '__main__':
     arrows = []
 
     for element in range(1, 6):
-        gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=450, group=foreground))
+        gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=550, group=foreground))
 
-    arrows.append(Sprite(image.load('UP.png'), x=75, y=350, group=foreground))
-    arrows.append(Sprite(image.load('DOWN.png'), x=75, y=350, group=foreground))
+    arrows.append(Sprite(image.load('UP.gif'), x=0, y=1030, group=foreground))
+    arrows.append(Sprite(image.load('DOWN.gif'), x=0, y=1030, group=foreground))
 
     animation = gifs[0]
     arrow_img = arrows[0]
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
             data_str = ser.read(ser.inWaiting()).decode('ascii')
-            print(data_str)
+            # For debug purposes -- > print(data_str)
             if len(data_str) >= 5:
                 floor_number = data_str[1]  # Get floor number
                 direction = data_str[3:5]  # Get direction state
