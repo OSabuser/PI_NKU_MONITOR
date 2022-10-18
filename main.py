@@ -25,8 +25,8 @@ if __name__ == '__main__':
     for element in range(1, 6):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=1030, group=foreground))
 
-    arrows.append(Sprite(image.load('UP.png'), x=0, y=450, group=foreground))
-    arrows.append(Sprite(image.load('DOWN.png'), x=0, y=450, group=foreground))
+    arrows.append(Sprite(image.load('UP.png'), x=90, y=450, group=foreground))
+    arrows.append(Sprite(image.load('DOWN.png'), x=90, y=450, group=foreground))
 
     animation = gifs[0]
     arrow_img = arrows[0]
