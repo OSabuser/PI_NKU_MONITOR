@@ -16,11 +16,12 @@ if __name__ == '__main__':
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
+    batch = pyglet.graphics.Batch()
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, group=foreground)
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch,group=background)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, batch=batch, group=foreground)
 
     gifs = []
     arrows = []
@@ -88,8 +89,7 @@ if __name__ == '__main__':
 
     def draw_everything(dt):
         win.clear()
-        back_img.draw()
-        logo_img.draw()
+        batch.draw()
         arrow_img.draw()
         animation.draw()
 
