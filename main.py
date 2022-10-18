@@ -23,10 +23,10 @@ if __name__ == '__main__':
     arrows = []
 
     for element in range(1, 6):
-        gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=800, group=foreground))
+        gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=900, group=foreground))
 
-    arrows.append(Sprite(image.load('UP.png'), x=100, y=450, group=foreground))
-    arrows.append(Sprite(image.load('DOWN.png'), x=100, y=450, group=foreground))
+    arrows.append(Sprite(image.load('UP.png'), x=110, y=450, group=foreground))
+    arrows.append(Sprite(image.load('DOWN.png'), x=110, y=450, group=foreground))
 
     animation = gifs[0]
     arrow_img = arrows[0]
@@ -46,7 +46,8 @@ if __name__ == '__main__':
     arrow_img.visible = False
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1200, group=foreground)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground)
+    qr_img = Sprite(pyglet.resource.animation(f"QR.gif"), x=80, y=80, group=foreground)
 
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
@@ -90,6 +91,7 @@ if __name__ == '__main__':
         win.clear()
         back_img.draw()
         logo_img.draw()
+        qr_img.draw()
         arrow_img.draw()
         animation.draw()
 
