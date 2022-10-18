@@ -68,7 +68,7 @@ if __name__ == '__main__':
                 idx = int(floor_state[0])
                 if idx in range(1, 6):
                     animation.visible = True
-                    animation = gifs.append(Sprite(pyglet.resource.animation(f"{idx}.gif"), x=0, y=1030, group=foreground))
+                    animation = Sprite(pyglet.resource.animation(f"{idx}.gif"), x=0, y=1030, group=foreground)
 
             if arrow_state[0] is not arrow_state[1]:  # Draw arrow
                 if arrow_state[0] == 'UP':
