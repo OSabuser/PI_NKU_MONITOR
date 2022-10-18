@@ -34,12 +34,7 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
-    while True:
-        try:
-            ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
-        except:
-            ser = None
-            print('\nIncorrect input, try again')
+    ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
