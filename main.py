@@ -34,7 +34,12 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
-    ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
+    while True:
+        try:
+            ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
+        except:
+            ser = None
+            print('\nIncorrect input, try again')
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
@@ -48,6 +53,7 @@ if __name__ == '__main__':
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
     logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground)
     qr_img = Sprite(pyglet.resource.animation(f"QR.gif"), x=80, y=80, group=foreground)
+
 
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
