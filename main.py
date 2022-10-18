@@ -45,7 +45,7 @@ if __name__ == '__main__':
     animation.visible = False
     arrow_img.visible = False
 
-    back_img = Sprite(image.load('BACK.gif'), x=0, y=0, group=background)
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
     logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, group=foreground)
 
     def second_thread(dt):
