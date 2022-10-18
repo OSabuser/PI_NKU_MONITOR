@@ -25,7 +25,7 @@ if __name__ == '__main__':
     gifs = []
     arrows = []
 
-    for element in range(1, 6):
+    for element in range(1, 2):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=50, y=900, group=foreground))
 
     arrows.append(Sprite(pyglet.resource.animation('UP.gif'), x=75, y=350, group=foreground))
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
 
-   # ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
+    ser = serial.Serial(port='/./dev/ttyAMA0', baudrate=115200)  # open serial port
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
@@ -52,13 +52,13 @@ if __name__ == '__main__':
         global animation, arrow_img, floor_number, direction
 
         # UART message handling from MCU
-        #if ser.inWaiting() > 0:
+        if ser.inWaiting() > 0:
             # read the bytes and convert from binary array to ASCII
-           # data_str = ser.read(ser.inWaiting()).decode('ascii')
-           # print(data_str)
-           # if len(data_str) >= 5:
-           #     floor_number = data_str[1]  # Get floor number
-           #     direction = data_str[3:5]  # Get direction state
+            data_str = ser.read(ser.inWaiting()).decode('ascii')
+            print(data_str)
+            if len(data_str) >= 5:
+                floor_number = data_str[1]  # Get floor number
+                direction = data_str[3:5]  # Get direction state
 
         if floor_number in ok_list:
             floor_state[0] = floor_number
