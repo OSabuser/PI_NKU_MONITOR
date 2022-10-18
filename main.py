@@ -20,8 +20,7 @@ if __name__ == '__main__':
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch,group=background)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, batch=batch, group=foreground)
+
 
     gifs = []
     arrows = []
@@ -29,8 +28,8 @@ if __name__ == '__main__':
     for element in range(1, 6):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=50, y=900, group=foreground))
 
-    arrows.append(Sprite(pyglet.resource.animation('UP.gif'), x=75, y=350, group=foreground))
-    arrows.append(Sprite(pyglet.resource.animation('DOWN.gif'), x=75, y=350, group=foreground))
+    #arrows.append(Sprite(pyglet.resource.animation('UP.gif'), x=75, y=350, group=foreground))
+    #arrows.append(Sprite(pyglet.resource.animation('DOWN.gif'), x=75, y=350, group=foreground))
 
     animation = gifs[0]
     arrow_img = gifs[0]
@@ -49,6 +48,8 @@ if __name__ == '__main__':
     animation.visible = False
     arrow_img.visible = False
 
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, batch=batch, group=foreground)
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
 
