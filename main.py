@@ -56,10 +56,9 @@ if __name__ == '__main__':
     animation.visible = False
     arrow_img.visible = False
 
-    batch = pyglet.graphics.Batch()
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background, batch=batch)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground, batch=batch)
-    qr_img = Sprite(pyglet.resource.animation(f"QR.gif"), x=80, y=80, group=foreground, batch=batch)
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground)
+    qr_img = Sprite(pyglet.resource.animation(f"QR.gif"), x=80, y=80, group=foreground)
 
 
     def second_thread(dt):
@@ -102,7 +101,9 @@ if __name__ == '__main__':
 
     def draw_everything(dt):
         win.clear()
-        batch.draw()
+        back_img.draw()
+        logo_img.draw()
+        qr_img.draw()
         arrow_img.draw()
         animation.draw()
 
