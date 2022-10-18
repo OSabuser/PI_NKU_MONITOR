@@ -67,16 +67,19 @@ if __name__ == '__main__':
             if floor_state[0] is not floor_state[1]:  # Draw floor number
                 idx = int(floor_state[0])
                 if idx in range(1, 6):
-                    animation.visible = True
+                    animation.delete()
                     animation = Sprite(pyglet.resource.animation(f"{idx}.gif"), x=0, y=1030, group=foreground)
+                    animation.visible = True
 
             if arrow_state[0] is not arrow_state[1]:  # Draw arrow
                 if arrow_state[0] == 'UP':
-                    arrow_img.visible = True
+                    arrow_img.delete()
                     arrow_img = Sprite(pyglet.resource.animation('UP.gif'), x=0, y=550, group=foreground)
-                elif arrow_state[0] == 'DL':
                     arrow_img.visible = True
+                elif arrow_state[0] == 'DL':
+                    arrow_img.delete()
                     arrow_img = Sprite(pyglet.resource.animation('DOWN.gif'), x=0, y=550, group=foreground)
+                    arrow_img.visible = True
                 elif arrow_state[0] == 'NN':
                     arrow_img.visible = False
 
