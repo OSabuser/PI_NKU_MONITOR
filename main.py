@@ -20,7 +20,7 @@ if __name__ == '__main__':
     foreground = pyglet.graphics.OrderedGroup(1)
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=100, y=100, group=foreground)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, group=foreground)
 
     gifs = []
     arrows = []
