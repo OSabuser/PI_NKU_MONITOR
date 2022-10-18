@@ -16,7 +16,6 @@ if __name__ == '__main__':
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    batch = pyglet.graphics.Batch()
     background = pyglet.graphics.OrderedGroup(0)
     foreground = pyglet.graphics.OrderedGroup(1)
 
@@ -46,8 +45,8 @@ if __name__ == '__main__':
     animation.visible = False
     arrow_img.visible = False
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, batch=batch, group=foreground)
+    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
+    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, group=foreground)
 
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
@@ -89,7 +88,8 @@ if __name__ == '__main__':
 
     def draw_everything(dt):
         win.clear()
-        batch.draw()
+        back_img.draw()
+        logo_img.draw()
         arrow_img.draw()
         animation.draw()
 
