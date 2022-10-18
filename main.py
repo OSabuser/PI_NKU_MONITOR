@@ -22,14 +22,14 @@ if __name__ == '__main__':
     gifs = []
     arrows = []
 
-    for element in range(1, 2):
+    for element in range(1, 6):
         gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=1030, group=foreground))
 
-    #arrows.append(Sprite(image.load('UP.gif'), x=0, y=550, group=foreground))
-    #arrows.append(Sprite(image.load('DOWN.gif'), x=0, y=550, group=foreground))
+    arrows.append(Sprite(image.load('UP.gif'), x=0, y=550, group=foreground))
+    arrows.append(Sprite(image.load('DOWN.gif'), x=0, y=550, group=foreground))
 
     animation = gifs[0]
-    arrow_img = gifs[0]
+    arrow_img = arrows[0]
 
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     animation.visible = False
     arrow_img.visible = False
 
-    back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background)
+    back_img = Sprite(image.load('BACK.gif'), x=0, y=0, group=background)
     logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, group=foreground)
 
     def second_thread(dt):
@@ -65,24 +65,18 @@ if __name__ == '__main__':
             arrow_state[0] = direction
 
             if floor_state[0] is not floor_state[1]:  # Draw floor number
-                idx = int(floor_state[0])
-                if idx in range(1, 6):
-                    animation.delete()
-                    animation = Sprite(pyglet.resource.animation(f"{idx}.gif"), x=0, y=1030, group=foreground)
+                idx = int(floor_state[0]) - 1
+                if idx in range(0, 5):
                     animation.visible = True
+                    animation = gifs[idx]
 
             if arrow_state[0] is not arrow_state[1]:  # Draw arrow
                 if arrow_state[0] == 'UP':
-                    arrow_img.delete()
-                    arrow_img = Sprite(pyglet.resource.animation('UP.gif'), x=0, y=550, group=foreground)
                     arrow_img.visible = True
                 elif arrow_state[0] == 'DL':
-                    arrow_img.delete()
-                    arrow_img = Sprite(pyglet.resource.animation('DOWN.gif'), x=0, y=550, group=foreground)
                     arrow_img.visible = True
                 elif arrow_state[0] == 'NN':
-                    if arrow_img.visible:
-                        arrow_img.visible = False
+                    arrow_img.visible = False
 
             floor_number = ''
             direction = ''
@@ -94,10 +88,8 @@ if __name__ == '__main__':
         win.clear()
         back_img.draw()
         logo_img.draw()
-        if arrow_img is not None:
-            arrow_img.draw()
-        if animation is not None:
-            animation.draw()
+        arrow_img.draw()
+        animation.draw()
 
 
     @win.event
