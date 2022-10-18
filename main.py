@@ -30,7 +30,7 @@ if __name__ == '__main__':
    # arrows.append(Sprite(pyglet.resource.animation('DOWN.gif'), x=75, y=350, group=foreground))
 
     animation = gifs[0]
-    arrow_img = Sprite(pyglet.resource.animation('UP.gif'), x=75, y=350, group=foreground)
+    arrow_img = gifs[0]
 
     win = Window(width=480, height=1920, fullscreen=True)
     win.set_mouse_visible(visible=False)
@@ -43,11 +43,12 @@ if __name__ == '__main__':
     can_refresh = False
     floor_number = ''
     direction = ''
-    animation.visible = False
+    #animation.visible = False
     arrow_img.visible = False
 
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, batch=batch, group=background)
     logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=100, batch=batch, group=foreground)
+
     def second_thread(dt):
         global animation, arrow_img, floor_number, direction
 
@@ -89,7 +90,7 @@ if __name__ == '__main__':
     def draw_everything(dt):
         win.clear()
         batch.draw()
-        arrow_img.draw()
+       # arrow_img.draw()
         animation.draw()
 
 
