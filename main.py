@@ -94,8 +94,10 @@ if __name__ == '__main__':
         win.clear()
         back_img.draw()
         logo_img.draw()
-        arrow_img.draw()
-        animation.draw()
+        if arrow_img is not None:
+            arrow_img.draw()
+        if animation is not None:
+            animation.draw()
 
 
     @win.event
