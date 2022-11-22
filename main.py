@@ -27,7 +27,7 @@ if __name__ == '__main__':
     arrows = []
 
     for element in range(1, 6):
-        gifs.append(Sprite(pyglet.resource.animation(f"{element}.gif"), x=0, y=900, group=foreground))
+        gifs.append(Sprite(pyglet.resource.animation("{0}.gif".format(element)), x=0, y=900, group=foreground))
 
     arrows.append(Sprite(image.load('UP.png'), x=140, y=515, group=foreground))
     arrows.append(Sprite(image.load('DOWN.png'), x=140, y=515, group=foreground))
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     batch = pyglet.graphics.Batch()
     back_img = Sprite(image.load('BACK.png'), x=0, y=0, group=background, batch=batch)
-    logo_img = Sprite(pyglet.resource.animation(f"LOGO.gif"), x=90, y=1500, group=foreground, batch=batch)
+    logo_img = Sprite(pyglet.resource.animation("LOGO.gif"), x=90, y=1500, group=foreground, batch=batch)
     qr_img = Sprite(image.load(f"QR.png"), x=80, y=80, group=foreground, batch=batch)
 
 
