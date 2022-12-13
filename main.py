@@ -35,17 +35,17 @@ if __name__ == '__main__':
     animation = gifs[0]
     arrow_img = arrows[0]
 
-    win = Window(width=480, height=1920, fullscreen=True)
-    win.set_mouse_visible(visible=False)
+    win = Window(width=480, height=1920, fullscreen=False)
+    win.set_mouse_visible(visible=True)
 
-    while True:
-        try:
-            ser = serial.Serial(port=uart0_port_name, baudrate=uart0_baud)  # open serial port
-        except SerialException:
-            print('Serial port connection error!\n')
-            pass
-        else:
-            break
+    # while True:
+    #     try:
+    #         ser = serial.Serial(port=uart0_port_name, baudrate=uart0_baud)  # open serial port
+    #     except SerialException:
+    #         print('Serial port connection error!\n')
+    #         pass
+    #     else:
+    #         break
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
@@ -118,6 +118,6 @@ if __name__ == '__main__':
         can_refresh = True
 
 
-    pyglet.clock.schedule_interval(second_thread, 0.5)
+   # pyglet.clock.schedule_interval(second_thread, 0.5)
     pyglet.clock.schedule_interval(draw_everything, 1 / 60)
     pyglet.app.run()
