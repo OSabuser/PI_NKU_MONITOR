@@ -9,7 +9,7 @@ from pyglet.gl import *
 import serial
 from serial import SerialException
 
-uart0_port_name = '/./dev/ttyAMA0'
+uart0_port_name = '/./dev/ttyS3'
 uart0_baud = 115200
 
 # TODO: 1. try, except на критически важные блоки кода
@@ -38,14 +38,14 @@ if __name__ == '__main__':
     win = Window(width=480, height=1920, fullscreen=False)
     win.set_mouse_visible(visible=True)
 
-    # while True:
-    #     try:
-    #         ser = serial.Serial(port=uart0_port_name, baudrate=uart0_baud)  # open serial port
-    #     except SerialException:
-    #         print('Serial port connection error!\n')
-    #         pass
-    #     else:
-    #         break
+    while True:
+        try:
+            ser = serial.Serial(port=uart0_port_name, baudrate=uart0_baud)  # open serial port
+        except SerialException:
+            print('Serial port connection error!\n')
+            pass
+        else:
+            break
 
     floor_state = ['0', '0']
     arrow_state = ['0', '0']
@@ -118,6 +118,6 @@ if __name__ == '__main__':
         can_refresh = True
 
 
-   # pyglet.clock.schedule_interval(second_thread, 0.5)
+    pyglet.clock.schedule_interval(second_thread, 0.5)
     pyglet.clock.schedule_interval(draw_everything, 1 / 60)
     pyglet.app.run()
